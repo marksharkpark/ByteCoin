@@ -20,11 +20,13 @@ struct CoinManager {
     var delegate: CoinManagerDelegate?
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
     
+    // Creates the API Call using performRequest.
     func getCoinPrice(for currency: String){
-        let urlString = "\(baseURL)/USD?apikey=\(apiKey)"
+        let urlString = "\(baseURL)/\(currency)?apikey=\(apiKey)"
+        //print(urlString)
         self.performRequest(with: urlString)
     }
-    
+    // Making the API Call and parsing the JSON in order to populate our CurrencyModel object. Afterwards, we use the delegate pattern to pass the information to our CurrencyViewController. 
     func performRequest(with urlString: String){
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
@@ -37,9 +39,9 @@ struct CoinManager {
                     if let currency = self.parseJSON(safeData){
                         // Need to create delegate method to pass this data to our viewController.
                         self.delegate?.getCurrencyRep(coinManager: self, data: currency)
-                        print(currency.rate) // price
-                        print(currency.asset_id_quote) // cash currency
-                        print(currency.asset_id_base) // coin currency
+                      //  print(currency.rate) // price
+                      //  print(currency.asset_id_quote) // cash currency
+                      //  print(currency.asset_id_base) // coin currency
                         
                     }
                 }

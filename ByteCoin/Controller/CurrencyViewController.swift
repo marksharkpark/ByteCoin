@@ -38,7 +38,8 @@ class CurrencyViewController: UIViewController, UIPickerViewDataSource, UIPicker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return coinManager.currencyArray[row]
     }
-
+    
+    // Purpose: Use the value chosen in the picker as a parameter for our API call. 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let coin = coinManager.currencyArray[row]
         print(coinManager.getCoinPrice(for: coin))
@@ -46,7 +47,7 @@ class CurrencyViewController: UIViewController, UIPickerViewDataSource, UIPicker
 }
 //MARK: CoinManagerDelegate
     extension CurrencyViewController: CoinManagerDelegate{
-        func getCurrencyRep(coinManager: CoinManager, data: CurrencyModel){
+        func getCurrencyRep(coinManager: CoinManager, data: CurrencyModel){ // Updating our UI using the CurrencyModel object.
             DispatchQueue.main.async {
                 self.bitcoinLabel.text = data.rateString
                 self.currencyLabel.text = data.asset_id_quote
